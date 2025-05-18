@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>幸运大抽奖</title>
+    <style>
+      html, body {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: #f8f8f8;
+      }
+      #app {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      #splash {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f8f8;
+        z-index: 1000;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      #splash.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 105, 0, 0.3);
+        border-radius: 50%;
+        border-top-color: #ff6900;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      .logo {
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #ff6900;
+        text-align: center;
+      }
+      
+      .loading-text {
+        font-size: 16px;
+        color: #666;
+        text-align: center;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash">
+      <div class="logo">幸运大抽奖</div>
+      <div class="spinner"></div>
+      <div class="loading-text">加载中...</div>
+    </div>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+    <script>
+      // Hide splash screen after loading
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.getElementById('splash').classList.add('hidden');
+        }, 1000);
+      });
+
+      // Prevent zooming on mobile devices
+      document.addEventListener('touchmove', function(event) {
+        if (event.scale !== 1) {
+          event.preventDefault();
+        }
+      }, { passive: false });
+    </script>
+  </body>
+</html>

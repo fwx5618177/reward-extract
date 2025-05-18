@@ -1,0 +1,375 @@
+:root {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  
+  color: #213547;
+  background-color: #f8f8f8;
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+}
+
+.container {
+  max-width: 500px;
+  width: 100%;
+  padding: 32px 24px 24px 24px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-container {
+  max-width: 800px;
+}
+
+h1 {
+  color: #ff6900;
+  margin-bottom: 28px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+h3 {
+  color: #555;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.phone-input {
+  display: flex;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 350px;
+}
+
+input[type="tel"] {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px 0 0 6px;
+  font-size: 18px;
+  outline: none;
+}
+
+button {
+  padding: 14px 28px;
+  background-color: #ff6900;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 0 6px 6px 0;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+#verify-btn {
+  border-radius: 0 6px 6px 0;
+}
+
+#spin-btn {
+  border-radius: 8px;
+  margin-top: 20px;
+  width: 180px;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+button:hover {
+  background-color: #e05c00;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 20px;
+}
+
+.message.success {
+  background-color: #e7f7e7;
+  color: #28a745;
+}
+
+.message.error {
+  background-color: #ffeeee;
+  color: #dc3545;
+}
+
+.wheel-container {
+  position: relative;
+  margin: 0 auto 24px;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#wheel-canvas {
+  display: block;
+  touch-action: none;
+  width: 100% !important;
+  height: 100% !important;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(255, 105, 0, 0.08);
+}
+
+.result {
+  margin-top: 24px;
+  padding: 18px;
+  background-color: #fff9e6;
+  border: 1px solid #ffce80;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff6900;
+  display: none;
+}
+
+/* Admin styles */
+.admin-form {
+  max-width: 400px;
+  margin: 0 auto 30px;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.admin-link, .back-link {
+  margin-top: 20px;
+}
+
+.admin-link a, .back-link a {
+  color: #666;
+  text-decoration: none;
+}
+
+.admin-link a:hover, .back-link a:hover {
+  text-decoration: underline;
+}
+
+.admin-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  background: none;
+  color: #666;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  color: #ff6900;
+  border-bottom-color: #ff6900;
+}
+
+.panel {
+  margin-bottom: 30px;
+}
+
+.file-input-container {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.file-input-container input[type="file"] {
+  display: none;
+}
+
+.file-label {
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.file-label:hover {
+  background-color: #e6e6e6;
+}
+
+#file-name {
+  flex: 1;
+  color: #666;
+}
+
+.excel-format {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.excel-format ul {
+  margin-left: 20px;
+}
+
+.prizes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.prizes-table th, .prizes-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.prizes-table th {
+  background-color: #f5f5f5;
+}
+
+.prizes-table input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.prizes-table input[type="number"] {
+  width: 80px;
+}
+
+.logout-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#logout-btn {
+  background-color: #f44336;
+}
+
+#logout-btn:hover {
+  background-color: #d32f2f;
+}
+
+#save-prizes-btn {
+  margin-top: 15px;
+}
+
+/* 移动端全屏适配 */
+@media (max-width: 600px) {
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    background: #f8f8f8;
+  }
+  .container {
+    max-width: 100vw;
+    width: 100vw;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 18vw 4vw 8vw 4vw;
+    justify-content: flex-start;
+  }
+  h1 {
+    font-size: 7vw;
+    margin-bottom: 7vw;
+  }
+  .phone-input {
+    max-width: 100vw;
+    margin-bottom: 6vw;
+  }
+  input[type="tel"] {
+    font-size: 5vw;
+    padding: 4vw;
+  }
+  button {
+    font-size: 5vw;
+    padding: 4vw 8vw;
+  }
+  #spin-btn {
+    width: 60vw;
+    font-size: 6vw;
+    margin-top: 6vw;
+  }
+  .wheel-container {
+    width: 80vw;
+    height: 80vw;
+    margin-bottom: 6vw;
+  }
+  #wheel-canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .result {
+    font-size: 6vw;
+    margin-top: 6vw;
+    padding: 5vw;
+    border-radius: 4vw;
+  }
+} 

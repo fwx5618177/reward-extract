@@ -1,0 +1,33 @@
+{
+  "name": "reward-extract",
+  "private": true,
+  "version": "1.0.0",
+  "description": "抽奖系统 Mono-repo",
+  "scripts": {
+    "dev:front": "pnpm --filter frontend dev",
+    "dev:back": "pnpm --filter backend dev",
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "build:front": "pnpm --filter frontend build",
+    "build:back": "pnpm --filter backend build",
+    "clean": "rimraf node_modules packages/*/node_modules packages/*/dist",
+    "preview": "pnpm --filter frontend preview",
+    "lint": "pnpm -r lint",
+    "format": "pnpm -r format",
+    "test": "pnpm -r test",
+    "start": "bash start.sh"
+  },
+  "keywords": [
+    "抽奖",
+    "mono-repo"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}
