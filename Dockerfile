@@ -41,7 +41,10 @@ ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com \
     NPM_CONFIG_DISTURL=https://npmmirror.com/mirrors/node \
     PNPM_REGISTRY=https://registry.npmmirror.com
 
-RUN apk add --no-cache nodejs npm && \
+# 设置 Alpine 镜像源并安装 nodejs
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache nodejs npm && \
     npm install -g pnpm
 
 WORKDIR /app
