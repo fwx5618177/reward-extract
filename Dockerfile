@@ -1,26 +1,43 @@
 # --------- 构建前端 ---------
 FROM node:20 AS frontend-build
 WORKDIR /app
+# 设置 npm 和 pnpm 镜像
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set disturl https://npmmirror.com/mirrors/node
 COPY pnpm-lock.yaml .
 COPY packages/frontend ./packages/frontend
 COPY packages/frontend/package.json ./packages/frontend/
 WORKDIR /app/packages/frontend
-RUN npm install -g pnpm && pnpm install && pnpm build
+RUN npm install -g pnpm && \
+    pnpm config set registry https://registry.npmmirror.com && \
+    pnpm config set disturl https://npmmirror.com/mirrors/node && \
+    pnpm install && pnpm build
 
 # --------- 构建后端 ---------
 FROM node:20 AS backend-build
 WORKDIR /app
+# 设置 npm 和 pnpm 镜像
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set disturl https://npmmirror.com/mirrors/node
 COPY pnpm-lock.yaml .
 COPY packages/backend ./packages/backend
 COPY packages/backend/package.json ./packages/backend/
 WORKDIR /app/packages/backend
-RUN npm install -g pnpm && pnpm install && pnpm build
+RUN npm install -g pnpm && \
+    pnpm config set registry https://registry.npmmirror.com && \
+    pnpm config set disturl https://npmmirror.com/mirrors/node && \
+    pnpm install && pnpm build
 
 # --------- 生产镜像（nginx serve 前端，node serve 后端） ---------
 FROM nginx:1.25-alpine
 
 # 安装 nodejs 和 pnpm
-RUN apk add --no-cache nodejs npm && npm install -g pnpm
+RUN apk add --no-cache nodejs npm && \
+    npm config set registry https://registry.npmmirror.com && \
+    npm config set disturl https://npmmirror.com/mirrors/node && \
+    npm install -g pnpm && \
+    pnpm config set registry https://registry.npmmirror.com && \
+    pnpm config set disturl https://npmmirror.com/mirrors/node
 
 WORKDIR /app
 
