@@ -1,43 +1,48 @@
 # --------- 构建前端 ---------
 FROM node:20 AS frontend-build
 WORKDIR /app
-# 设置 npm 和 pnpm 镜像
-RUN npm config set registry https://registry.npmmirror.com && \
-    npm config set disturl https://npmmirror.com/mirrors/node
+# 设置 npm 环境变量
+ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com \
+    NPM_CONFIG_DISTURL=https://npmmirror.com/mirrors/node
 COPY pnpm-lock.yaml .
 COPY packages/frontend ./packages/frontend
 COPY packages/frontend/package.json ./packages/frontend/
 WORKDIR /app/packages/frontend
 RUN npm install -g pnpm && \
-    pnpm config set registry https://registry.npmmirror.com && \
-    pnpm config set disturl https://npmmirror.com/mirrors/node && \
-    pnpm install && pnpm build
+    PNPM_HOME="/root/.local/share/pnpm" \
+    PATH="$PNPM_HOME:$PATH" \
+    PNPM_REGISTRY=https://registry.npmmirror.com \
+    pnpm install && \
+    pnpm build
 
 # --------- 构建后端 ---------
 FROM node:20 AS backend-build
 WORKDIR /app
-# 设置 npm 和 pnpm 镜像
-RUN npm config set registry https://registry.npmmirror.com && \
-    npm config set disturl https://npmmirror.com/mirrors/node
+# 设置 npm 环境变量
+ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com \
+    NPM_CONFIG_DISTURL=https://npmmirror.com/mirrors/node
 COPY pnpm-lock.yaml .
 COPY packages/backend ./packages/backend
 COPY packages/backend/package.json ./packages/backend/
 WORKDIR /app/packages/backend
 RUN npm install -g pnpm && \
-    pnpm config set registry https://registry.npmmirror.com && \
-    pnpm config set disturl https://npmmirror.com/mirrors/node && \
-    pnpm install && pnpm build
+    PNPM_HOME="/root/.local/share/pnpm" \
+    PATH="$PNPM_HOME:$PATH" \
+    PNPM_REGISTRY=https://registry.npmmirror.com \
+    pnpm install && \
+    pnpm build
 
 # --------- 生产镜像（nginx serve 前端，node serve 后端） ---------
 FROM nginx:1.25-alpine
 
 # 安装 nodejs 和 pnpm
+# 设置 npm 环境变量
+ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com \
+    NPM_CONFIG_DISTURL=https://npmmirror.com/mirrors/node \
+    PNPM_REGISTRY=https://registry.npmmirror.com
+
 RUN apk add --no-cache nodejs npm && \
-    npm config set registry https://registry.npmmirror.com && \
-    npm config set disturl https://npmmirror.com/mirrors/node && \
-    npm install -g pnpm && \
-    pnpm config set registry https://registry.npmmirror.com && \
-    pnpm config set disturl https://npmmirror.com/mirrors/node
+    npm install -g pnpm
 
 WORKDIR /app
 
@@ -52,7 +57,7 @@ COPY --from=backend-build /app/packages/backend /app/backend
 
 # 后端依赖
 WORKDIR /app/backend
-RUN pnpm install --prod
+RUN PNPM_REGISTRY=https://registry.npmmirror.com pnpm install --prod
 
 # 启动脚本
 WORKDIR /app
